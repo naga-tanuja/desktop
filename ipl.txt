@@ -1,0 +1,17 @@
+def login():
+    username = input("Enter your username: ")
+    password = input("Enter your password: ")
+
+    with open("users.csv", mode="r", newline='') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            if row[0] == username:
+                hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+                if row[1] == hashed_password:
+                    print(f"Welcome, {username}! You are eligible for registration.")
+                    print(f"Description: {row[2]}")
+                    return
+                else:
+                    print("Invalid password.")
+                    return
+        print("Username not found.")

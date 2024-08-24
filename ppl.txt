@@ -1,0 +1,20 @@
+import hashlib
+import csv
+
+def register():
+    username = input("Enter a username: ")
+    password = input("Enter a password: ")
+    description = input("Enter a description about yourself: ")
+    eligibility = input("Are you eligible for registration? (yes/no): ")
+
+    if eligibility.lower() != "yes":
+        print("You are not eligible for registration.")
+        return
+
+    hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+
+    with open("users.csv", mode="a", newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([username, hashed_password, description])
+
+    print("Registration successful!")
